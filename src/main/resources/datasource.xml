@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="oracleXaDataSource" class="oracle.jdbc.xa.client.OracleXADataSource">
+		<property name="URL" value="jdbc:oracle:thin:@localhost:1521:xe" />
+		<property name="user" value="JTADEMO" />
+		<property name="password" value="JTADEMO" />
+	</bean>
+
+	<bean id="oracleDataSource" class="com.atomikos.jdbc.AtomikosDataSourceBean">
+		<property name="xaDataSource" ref="oracleXaDataSource" />
+		<property name="uniqueResourceName" value="oracleXaDs" />
+	</bean>
+
+	<bean id="mysqlXaDataSource" class="com.mysql.jdbc.jdbc2.optional.MysqlXADataSource">
+		<property name="url" value="jdbc:mysql://magic-db:3306/jtademo" />
+		<property name="user" value="root" />
+		<property name="password" value="root" />
+		<property name="pinGlobalTxToPhysicalConnection" value="true" />
+	</bean>
+
+	<bean id="mysqlDataSource" class="com.atomikos.jdbc.AtomikosDataSourceBean">
+		<property name="xaDataSource" ref="mysqlXaDataSource" />
+		<property name="uniqueResourceName" value="mysqlXaDs" />
+	</bean>
+	
+</beans>
